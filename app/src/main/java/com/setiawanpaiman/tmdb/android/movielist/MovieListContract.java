@@ -22,6 +22,11 @@ public interface MovieListContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadPopularMovies();
+        enum SortOrder {
+            BY_POPULARITY,
+            BY_TOP_RATED
+        }
+
+        void loadMovies(boolean refresh, SortOrder sortOrder);
     }
 }

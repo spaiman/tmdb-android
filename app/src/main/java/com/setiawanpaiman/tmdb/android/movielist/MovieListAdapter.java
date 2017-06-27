@@ -57,6 +57,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public void clearData() {
         mData.clear();
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

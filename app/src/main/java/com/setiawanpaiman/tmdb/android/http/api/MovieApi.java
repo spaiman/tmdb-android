@@ -13,4 +13,7 @@ public interface MovieApi {
 
     @GET("/3/movie/popular")
     Observable<MoviePaginatedList> getPopularMovies();
+
+    @GET("/3/movie/top_rated")
+    Observable<MoviePaginatedList> getTopRatedMovies();
 }

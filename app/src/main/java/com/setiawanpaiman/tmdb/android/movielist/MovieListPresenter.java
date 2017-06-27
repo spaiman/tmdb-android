@@ -1,5 +1,6 @@
 package com.setiawanpaiman.tmdb.android.movielist;
 
+import com.setiawanpaiman.tmdb.android.Constants;
 import com.setiawanpaiman.tmdb.android.data.source.MovieRepository;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.util.scheduler.BaseSchedulerProvider;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -37,7 +39,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadPopularMovies();
+        loadMovies(true, Constants.DEFAULT_SORT_ORDER);
     }
 
     @Override
@@ -46,16 +48,23 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     }
 
     @Override
-    public void loadPopularMovies() {
-        mComposite.add(mMovieRepository.getPopularMovies()
+    public void loadMovies(final boolean refresh, final SortOrder sortOrder) {
+        Observable<List<MovieViewModel>> observable = sortOrder == SortOrder.BY_POPULARITY ?
+                mMovieRepository.getPopularMovies() : mMovieRepository.getTopRatedMovies();
+
+        mComposite.add(observable
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .subscribe(this::processMovieList,
-                        throwable -> mMovieListView.showError(),
-                        () -> {}));
+                .subscribe(movieViewModels -> {
+                    processMovieList(refresh, movieViewModels);
+                }, throwable -> mMovieListView.showError(), () -> {}));
     }
 
-    private void processMovieList(final List<MovieViewModel> movieViewModels) {
+    private void processMovieList(final boolean refresh,
+                                  final List<MovieViewModel> movieViewModels) {
+        if (refresh) {
+            mMovieListView.clearMovieList();
+        }
         mMovieListView.showMovieList(movieViewModels);
     }
 }

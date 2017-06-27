@@ -18,20 +18,20 @@ import io.reactivex.Observable;
 public class MovieRepository implements MovieDataSource {
 
     @NonNull
-    private final MovieDataSource mMovieRemoteDataSouce;
+    private final MovieDataSource mMovieRemoteDataSource;
 
     @Inject
-    public MovieRepository(@NonNull @Remote MovieDataSource movieRemoteDataSouce) {
-        this.mMovieRemoteDataSouce = movieRemoteDataSouce;
+    public MovieRepository(@NonNull @Remote MovieDataSource movieRemoteDataSource) {
+        this.mMovieRemoteDataSource = movieRemoteDataSource;
     }
 
     @Override
     public Observable<List<MovieViewModel>> getPopularMovies() {
-        return mMovieRemoteDataSouce.getPopularMovies();
+        return mMovieRemoteDataSource.getPopularMovies();
     }
 
     @Override
     public Observable<List<MovieViewModel>> getTopRatedMovies() {
-        return mMovieRemoteDataSouce.getTopRatedMovies();
+        return mMovieRemoteDataSource.getTopRatedMovies();
     }
 }

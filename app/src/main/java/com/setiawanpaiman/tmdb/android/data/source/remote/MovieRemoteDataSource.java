@@ -35,6 +35,7 @@ public class MovieRemoteDataSource implements MovieDataSource {
 
     @Override
     public Observable<List<MovieViewModel>> getTopRatedMovies() {
-        return null;
+        return mMovieApi.getTopRatedMovies()
+                .map(MoviePaginatedList::toListViewModel);
     }
 }
