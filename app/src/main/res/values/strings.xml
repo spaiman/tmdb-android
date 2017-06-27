@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TMDb Android</string>
+    <string name="error_load_movies">Cannot load movies</string>
 </resources>

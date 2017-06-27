@@ -12,6 +12,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField 'String', 'BASE_URL_TMDB_API', '\"http://api.themoviedb.org\"'
+        buildConfigField 'String', 'BASE_URL_TMDB_IMAGE', '\"http://image.tmdb.org/t/p/\"'
+
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -25,6 +30,11 @@ android {
         keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
         it.buildConfigField 'String', 'TMDB_API_KEY', keystoreProperties['TMDB_API_KEY']
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 
@@ -36,6 +46,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
@@ -45,5 +56,8 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    debugCompile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+
     testCompile 'junit:junit:4.12'
 }

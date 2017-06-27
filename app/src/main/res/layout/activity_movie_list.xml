@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.setiawanpaiman.tmdb.android.movielist.MovieListActivity">
+    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <com.setiawanpaiman.tmdb.android.widget.AutoFitRecyclerGridView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
+        app:columnWidth="@dimen/poster_width"
+        app:horizontalSpacing="@dimen/spacing_small"
+        app:verticalSpacing="@dimen/spacing_small"
+        tools:context="com.setiawanpaiman.tmdb.android.movielist.MovieListActivity" />
+
+</android.support.v4.widget.SwipeRefreshLayout>

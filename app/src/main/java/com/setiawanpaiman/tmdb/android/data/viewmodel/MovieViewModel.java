@@ -1,7 +1,5 @@
 package com.setiawanpaiman.tmdb.android.data.viewmodel;
 
-import java.util.Date;
-
 /**
  * Created by Setiawan Paiman on 24/6/17.
  */

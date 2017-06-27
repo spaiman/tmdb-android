@@ -2,6 +2,7 @@ package com.setiawanpaiman.tmdb.android.data.model;
 
 import android.support.annotation.NonNull;
 
+import com.setiawanpaiman.tmdb.android.BuildConfig;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 
 /**
@@ -9,6 +10,8 @@ import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
  */
 
 public class Movie {
+
+    private static final String PHOTO_SMALL_SIZE = "w185";
 
     private long id;
     private String title;
@@ -19,6 +22,8 @@ public class Movie {
 
     @NonNull
     public MovieViewModel toViewModel() {
-        return new MovieViewModel(id, title, poster_path, overview, vote_average, release_date);
+        return new MovieViewModel(id, title,
+                BuildConfig.BASE_URL_TMDB_IMAGE + PHOTO_SMALL_SIZE + poster_path,
+                overview, vote_average, release_date);
     }
 }

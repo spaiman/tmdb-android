@@ -3,6 +3,8 @@ package com.setiawanpaiman.tmdb.android.di.module;
 import com.setiawanpaiman.tmdb.android.BuildConfig;
 import com.setiawanpaiman.tmdb.android.http.api.ApiFactory;
 import com.setiawanpaiman.tmdb.android.http.api.MovieApi;
+import com.setiawanpaiman.tmdb.android.util.scheduler.BaseSchedulerProvider;
+import com.setiawanpaiman.tmdb.android.util.scheduler.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -23,7 +25,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    MovieApi providesMovieapi(final ApiFactory apiFactory) {
+    MovieApi providesMovieApi(final ApiFactory apiFactory) {
         return apiFactory.create(MovieApi.class);
+    }
+
+    @Provides
+    @Singleton
+    BaseSchedulerProvider providesSchedulerProvider() {
+        return SchedulerProvider.getInstance();
     }
 }

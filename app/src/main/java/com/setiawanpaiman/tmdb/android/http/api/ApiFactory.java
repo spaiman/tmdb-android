@@ -12,6 +12,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,7 +27,7 @@ public class ApiFactory {
     private final Retrofit mRetrofit;
 
     public ApiFactory(@NonNull final String baseUrl) {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     private static final String API_KEY_QUERY_PARAM = "api_key";
 
@@ -39,14 +40,18 @@ public class ApiFactory {
                                 .build();
                         return chain.proceed(request.newBuilder().url(url).build());
                     }
-                })
-                .build();
+                });
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            okHttpClientBuilder.addInterceptor(logging);
+        }
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
+                .client(okHttpClientBuilder.build())
                 .build();
     }
 
