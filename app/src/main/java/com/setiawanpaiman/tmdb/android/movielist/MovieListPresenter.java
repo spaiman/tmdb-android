@@ -39,7 +39,6 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadMovies(true, Constants.DEFAULT_SORT_ORDER);
     }
 
     @Override

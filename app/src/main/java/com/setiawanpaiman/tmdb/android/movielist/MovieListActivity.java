@@ -15,12 +15,16 @@ import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.movielist.MovieListContract.Presenter.SortOrder;
 import com.setiawanpaiman.tmdb.android.util.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class MovieListActivity extends AppCompatActivity
         implements MovieListContract.View, SwipeRefreshLayout.OnRefreshListener {
+
+    static final String STATE_SORT_ORDER = MovieListActivity.class.getName() + "STATE_SORT_ORDER";
+    static final String STATE_DATA = MovieListActivity.class.getName() + "STATE_DATA";
 
     @Inject MovieListPresenter mPresenter;
 
@@ -38,7 +42,6 @@ public class MovieListActivity extends AppCompatActivity
         recyclerView.setAdapter(mAdapter);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mSwipeRefresh.setOnRefreshListener(this);
-        ViewUtils.setSwipeRefreshing(mSwipeRefresh, true);
 
         DaggerMovieListComponent.builder()
                 .applicationComponent(((MovieApplication) getApplicationContext()).getApplicationComponent())
@@ -47,6 +50,13 @@ public class MovieListActivity extends AppCompatActivity
                 .inject(this);
 
         mPresenter.subscribe();
+        if (savedInstanceState == null) {
+            mPresenter.loadMovies(true, mSortOrder);
+            ViewUtils.setSwipeRefreshing(mSwipeRefresh, true);
+        } else {
+            mSortOrder = SortOrder.values()[savedInstanceState.getInt(STATE_SORT_ORDER)];
+            mAdapter.addData(savedInstanceState.getParcelableArrayList(STATE_DATA));
+        }
     }
 
     @Override
@@ -67,6 +77,13 @@ public class MovieListActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_SORT_ORDER, mSortOrder.ordinal());
+        outState.putParcelableArrayList(STATE_DATA, new ArrayList<>(mAdapter.getData()));
     }
 
     @Override

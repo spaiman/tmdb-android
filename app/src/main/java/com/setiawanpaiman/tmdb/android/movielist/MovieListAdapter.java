@@ -18,12 +18,12 @@ import java.util.List;
  * Created by Setiawan Paiman on 25/6/17.
  */
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
+class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<MovieViewModel> mData;
 
-    public MovieListAdapter(Context context) {
+    MovieListAdapter(Context context) {
         this.mContext = context;
         this.mData = new ArrayList<>();
     }
@@ -49,13 +49,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return mData.size();
     }
 
-    public void addData(final List<MovieViewModel> data) {
+    public List<MovieViewModel> getData() {
+        // defensive copy
+        return new ArrayList<>(mData);
+    }
+
+    void addData(final List<MovieViewModel> data) {
         final int oldSize = mData.size();
         mData.addAll(data);
         notifyItemRangeInserted(oldSize, data.size());
     }
 
-    public void clearData() {
+    void clearData() {
         mData.clear();
         notifyDataSetChanged();
     }
@@ -64,7 +69,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         private ImageView mImageView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView;
         }
