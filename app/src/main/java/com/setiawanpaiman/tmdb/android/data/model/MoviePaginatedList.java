@@ -11,9 +11,6 @@ import java.util.List;
 
 public class MoviePaginatedList {
 
-    private int page;
-    private int total_results;
-    private int total_pages;
     private List<Movie> results;
 
     public List<MovieViewModel> toListViewModel() {

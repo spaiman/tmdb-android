@@ -1,6 +1,5 @@
 package com.setiawanpaiman.tmdb.android.movielist;
 
-import com.setiawanpaiman.tmdb.android.Constants;
 import com.setiawanpaiman.tmdb.android.data.source.MovieRepository;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.util.scheduler.BaseSchedulerProvider;
@@ -39,6 +38,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void subscribe() {
+        // no-op
     }
 
     @Override

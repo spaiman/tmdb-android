@@ -116,7 +116,7 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     private void changeSortOrder(final SortOrder oldSortOrder, final SortOrder newSortOrder) {
-        if (oldSortOrder == newSortOrder) {
+        if (oldSortOrder.equals(newSortOrder)) {
             return;
         }
 

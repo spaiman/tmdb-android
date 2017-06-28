@@ -18,7 +18,6 @@ public class AutoFitRecyclerGridView extends RecyclerView {
     private GridLayoutManager mLayoutManager;
     private int mColumnWidth = -1;
     private int mHorizontalSpacing;
-    private int mVerticalSpacing;
 
     public AutoFitRecyclerGridView(Context context) {
         super(context);
@@ -46,17 +45,18 @@ public class AutoFitRecyclerGridView extends RecyclerView {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AutoFitRecyclerGridView, 0, 0);
+        int verticalSpacing;
         try {
             mColumnWidth = array.getDimensionPixelSize(R.styleable.AutoFitRecyclerGridView_columnWidth, -1);
             mHorizontalSpacing = array.getDimensionPixelSize(R.styleable.AutoFitRecyclerGridView_horizontalSpacing, 0);
-            mVerticalSpacing = array.getDimensionPixelSize(R.styleable.AutoFitRecyclerGridView_verticalSpacing, 0);
+            verticalSpacing = array.getDimensionPixelSize(R.styleable.AutoFitRecyclerGridView_verticalSpacing, 0);
         } finally {
             array.recycle();
         }
 
         mLayoutManager = new GridLayoutManager(getContext(), 1);
         setLayoutManager(mLayoutManager);
-        addItemDecoration(new GridSpacingItemDecoration(mHorizontalSpacing, mVerticalSpacing));
+        addItemDecoration(new GridSpacingItemDecoration(mHorizontalSpacing, verticalSpacing));
     }
 }
 
