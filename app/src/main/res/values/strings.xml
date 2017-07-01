@@ -3,4 +3,7 @@
     <string name="error_load_movies">Cannot load movies</string>
     <string name="by_popular_movies">Sort by Popular Movies</string>
     <string name="by_top_rated">Sort by Top Rated Movies</string>
+    <string name="rating">Rating</string>
+    <string name="release_date">Release Date</string>
+    <string name="plot_synopsis">Plot Synopsis</string>
 </resources>

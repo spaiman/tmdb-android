@@ -12,8 +12,10 @@ import com.setiawanpaiman.tmdb.android.Constants;
 import com.setiawanpaiman.tmdb.android.MovieApplication;
 import com.setiawanpaiman.tmdb.android.R;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.moviedetail.MovieDetailActivity;
 import com.setiawanpaiman.tmdb.android.movielist.MovieListContract.Presenter.SortOrder;
 import com.setiawanpaiman.tmdb.android.util.ViewUtils;
+import com.setiawanpaiman.tmdb.android.widget.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class MovieListActivity extends AppCompatActivity
-        implements MovieListContract.View, SwipeRefreshLayout.OnRefreshListener {
+        implements MovieListContract.View,
+                    SwipeRefreshLayout.OnRefreshListener,
+                    OnItemClickListener {
 
     static final String STATE_SORT_ORDER = MovieListActivity.class.getName() + "STATE_SORT_ORDER";
     static final String STATE_DATA = MovieListActivity.class.getName() + "STATE_DATA";
@@ -39,6 +43,7 @@ public class MovieListActivity extends AppCompatActivity
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new MovieListAdapter(this);
+        mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mSwipeRefresh.setOnRefreshListener(this);
@@ -113,6 +118,11 @@ public class MovieListActivity extends AppCompatActivity
     public void onRefresh() {
         mPresenter.loadMovies(true, mSortOrder);
         ViewUtils.setSwipeRefreshing(mSwipeRefresh, true);
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        startActivity(MovieDetailActivity.newIntent(this, mAdapter.getData().get(position)));
     }
 
     private void changeSortOrder(final SortOrder oldSortOrder, final SortOrder newSortOrder) {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.setiawanpaiman.tmdb.android.R;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.widget.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder>
 
     private final Context mContext;
     private final List<MovieViewModel> mData;
+    private OnItemClickListener mOnItemClickListener;
 
     MovieListAdapter(Context context) {
         this.mContext = context;
@@ -32,7 +34,17 @@ class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder>
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.mImageView.setOnClickListener((v) -> {
+            if (viewHolder.getAdapterPosition() == RecyclerView.NO_POSITION) {
+                return;
+            }
+
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClicked(viewHolder.getAdapterPosition());
+            }
+        });
+        return viewHolder;
     }
 
     @Override
@@ -52,6 +64,10 @@ class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder>
     public List<MovieViewModel> getData() {
         // defensive copy
         return new ArrayList<>(mData);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     void addData(final List<MovieViewModel> data) {
