@@ -16,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Setiawan Paiman on 25/6/17.
  */
 
-public class MovieListPresenter implements MovieListContract.Presenter {
+class MovieListPresenter implements MovieListContract.Presenter {
 
     private final MovieListContract.View mMovieListView;
     private final MovieRepository mMovieRepository;
@@ -26,9 +26,9 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     private CompositeDisposable mComposite;
 
     @Inject
-    public MovieListPresenter(MovieListContract.View movieListView,
-                              MovieRepository movieRepository,
-                              BaseSchedulerProvider schedulerProvider) {
+    MovieListPresenter(MovieListContract.View movieListView,
+                       MovieRepository movieRepository,
+                       BaseSchedulerProvider schedulerProvider) {
         this.mMovieListView = movieListView;
         this.mMovieRepository = movieRepository;
         this.mSchedulerProvider = schedulerProvider;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.setiawanpaiman.tmdb.android.moviedetail.MovieDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_poster"
+            android:layout_width="@dimen/poster_detail_width"
+            android:layout_height="@dimen/poster_detail_height"
+            android:layout_marginRight="@dimen/spacing_medium" />
+
+        <TextView
+            style="@style/LabelText"
+            android:id="@+id/label_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_poster"
+            android:text="@string/rating" />
+
+        <TextView
+            style="@style/ValueText"
+            android:id="@+id/text_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_rating"
+            android:layout_toRightOf="@id/img_poster"
+            tools:text="7.5 / 10.0" />
+
+        <TextView
+            style="@style/LabelText"
+            android:id="@+id/label_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_rating"
+            android:layout_toRightOf="@id/img_poster"
+            android:text="@string/release_date" />
+
+        <TextView
+            style="@style/ValueText"
+            android:id="@+id/text_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_release_date"
+            android:layout_toRightOf="@id/img_poster"
+            tools:text="11 May 2017" />
+
+        <TextView
+            style="@style/LabelText"
+            android:id="@+id/label_synopsis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_release_date"
+            android:layout_toRightOf="@id/img_poster"
+            android:text="@string/plot_synopsis" />
+
+        <TextView
+            style="@style/ValueText"
+            android:id="@+id/text_synopsis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_synopsis"
+            android:layout_toRightOf="@id/img_poster"
+            tools:text="Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet" />
+
+    </RelativeLayout>
+
+</ScrollView>
