@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.setiawanpaiman.tmdb.android.MovieApplication;
 import com.setiawanpaiman.tmdb.android.R;
@@ -60,8 +61,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
             mPresenter.loadTrailers();
             mPresenter.loadReviews();
         } else {
-            mTrailersAdapter.addData(savedInstanceState.getParcelableArrayList(STATE_TRAILERS));
-            mReviewsAdapter.addData(savedInstanceState.getParcelableArrayList(STATE_REVIEWS));
+            showTrailers(savedInstanceState.getParcelableArrayList(STATE_TRAILERS));
+            showReviews(savedInstanceState.getParcelableArrayList(STATE_REVIEWS));
         }
     }
 
@@ -85,14 +86,20 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void showTrailers(List<VideoViewModel> videoViewModels) {
-        findViewById(R.id.text_trailers).setVisibility(videoViewModels.isEmpty() ? View.GONE : View.VISIBLE);
         mTrailersAdapter.addData(videoViewModels);
+        findViewById(R.id.progress_trailers).setVisibility(View.GONE);
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.vs_trailers);
+        viewSwitcher.setVisibility(View.VISIBLE);
+        viewSwitcher.setDisplayedChild(videoViewModels.isEmpty() ? 1 : 0);
     }
 
     @Override
     public void showReviews(List<ReviewViewModel> reviewViewModels) {
-        findViewById(R.id.text_reviews).setVisibility(reviewViewModels.isEmpty() ? View.GONE : View.VISIBLE);
         mReviewsAdapter.addData(reviewViewModels);
+        findViewById(R.id.progress_reviews).setVisibility(View.GONE);
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.vs_reviews);
+        viewSwitcher.setVisibility(View.VISIBLE);
+        viewSwitcher.setDisplayedChild(reviewViewModels.isEmpty() ? 1 : 0);
     }
 
     private void bindViews(@NonNull MovieViewModel moviewViewModel) {
