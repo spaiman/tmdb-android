@@ -83,14 +83,32 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:text="@string/trailers"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:text="@string/trailers" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_trailers"
+        <ProgressBar
+            android:id="@+id/progress_trailers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <ViewSwitcher
+            android:id="@+id/vs_trailers"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_trailers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:text="@string/no_trailers" />
+
+        </ViewSwitcher>
 
         <TextView
             android:id="@+id/text_reviews"
@@ -99,15 +117,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:text="@string/reviews"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:text="@string/reviews" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_reviews"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        <ProgressBar
+            android:id="@+id/progress_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <ViewSwitcher
+            android:id="@+id/vs_reviews"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_reviews"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:text="@string/no_reviews" />
+
+        </ViewSwitcher>
 
     </LinearLayout>
 
