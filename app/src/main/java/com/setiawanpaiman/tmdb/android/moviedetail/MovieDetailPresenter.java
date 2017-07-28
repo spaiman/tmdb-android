@@ -50,7 +50,14 @@ class MovieDetailPresenter implements MovieDetailContract.Presenter {
         mComposite.add(mMovieRepository.getTrailers(mMovieId)
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .subscribe(mMovieDetailView::showTrailers,
-                        throwable -> {}, () -> {}));
+                .subscribe(mMovieDetailView::showTrailers));
+    }
+
+    @Override
+    public void loadReviews() {
+        mComposite.add(mMovieRepository.getReviews(mMovieId)
+                .subscribeOn(mSchedulerProvider.io())
+                .observeOn(mSchedulerProvider.ui())
+                .subscribe(mMovieDetailView::showReviews));
     }
 }

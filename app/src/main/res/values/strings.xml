@@ -7,4 +7,6 @@
     <string name="release_date">Release Date</string>
     <string name="plot_synopsis">Plot Synopsis</string>
     <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="by">By</string>
 </resources>

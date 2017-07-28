@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.setiawanpaiman.tmdb.android.MovieApplication;
 import com.setiawanpaiman.tmdb.android.R;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 import com.setiawanpaiman.tmdb.android.movielist.MovieListActivity;
 import com.squareup.picasso.Picasso;
@@ -28,10 +29,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     private static final String EXTRA_MOVIE = MovieDetailActivity.class.getName() + ".EXTRA_MOVIE";
     static final String STATE_TRAILERS = MovieListActivity.class.getName() + "STATE_TRAILERS";
+    static final String STATE_REVIEWS = MovieListActivity.class.getName() + "STATE_REVIEWS";
 
     @Inject MovieDetailPresenter mPresenter;
 
     private TrailersAdapter mTrailersAdapter;
+    private ReviewsAdapter mReviewsAdapter;
 
     @NonNull
     public static Intent newIntent(@NonNull Context context, @NonNull MovieViewModel movie) {
@@ -55,8 +58,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         mPresenter.subscribe();
         if (savedInstanceState == null) {
             mPresenter.loadTrailers();
+            mPresenter.loadReviews();
         } else {
             mTrailersAdapter.addData(savedInstanceState.getParcelableArrayList(STATE_TRAILERS));
+            mReviewsAdapter.addData(savedInstanceState.getParcelableArrayList(STATE_REVIEWS));
         }
     }
 
@@ -75,12 +80,19 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STATE_TRAILERS, new ArrayList<>(mTrailersAdapter.getData()));
+        outState.putParcelableArrayList(STATE_REVIEWS, new ArrayList<>(mReviewsAdapter.getData()));
     }
 
     @Override
     public void showTrailers(List<VideoViewModel> videoViewModels) {
         findViewById(R.id.text_trailers).setVisibility(videoViewModels.isEmpty() ? View.GONE : View.VISIBLE);
         mTrailersAdapter.addData(videoViewModels);
+    }
+
+    @Override
+    public void showReviews(List<ReviewViewModel> reviewViewModels) {
+        findViewById(R.id.text_reviews).setVisibility(reviewViewModels.isEmpty() ? View.GONE : View.VISIBLE);
+        mReviewsAdapter.addData(reviewViewModels);
     }
 
     private void bindViews(@NonNull MovieViewModel moviewViewModel) {
@@ -100,5 +112,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         trailersRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mTrailersAdapter = new TrailersAdapter(this);
         trailersRecycler.setAdapter(mTrailersAdapter);
+
+        RecyclerView reviewsRecycler = (RecyclerView) findViewById(R.id.recycler_view_reviews);
+        reviewsRecycler.setNestedScrollingEnabled(true);
+        reviewsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mReviewsAdapter = new ReviewsAdapter();
+        reviewsRecycler.setAdapter(mReviewsAdapter);
     }
 }

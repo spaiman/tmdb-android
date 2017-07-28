@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.setiawanpaiman.tmdb.android.data.model.PaginatedList;
 import com.setiawanpaiman.tmdb.android.data.source.MovieDataSource;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 import com.setiawanpaiman.tmdb.android.http.api.MovieApi;
 
@@ -43,6 +44,12 @@ public class MovieRemoteDataSource implements MovieDataSource {
     @Override
     public Observable<List<VideoViewModel>> getTrailers(long movieId) {
         return mMovieApi.getTrailers(movieId)
+                .map(PaginatedList::toListViewModel);
+    }
+
+    @Override
+    public Observable<List<ReviewViewModel>> getReviews(long movieId) {
+        return mMovieApi.getReviews(movieId)
                 .map(PaginatedList::toListViewModel);
     }
 }

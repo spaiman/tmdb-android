@@ -1,6 +1,7 @@
 package com.setiawanpaiman.tmdb.android.data.source;
 
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface MovieDataSource {
     Observable<List<MovieViewModel>> getTopRatedMovies();
 
     Observable<List<VideoViewModel>> getTrailers(final long movieId);
+
+    Observable<List<ReviewViewModel>> getReviews(final long movieId);
 }
