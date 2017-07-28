@@ -3,6 +3,7 @@ package com.setiawanpaiman.tmdb.android.data.source;
 import android.support.annotation.NonNull;
 
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 
 import java.util.List;
@@ -39,5 +40,10 @@ public class MovieRepository implements MovieDataSource {
     @Override
     public Observable<List<VideoViewModel>> getTrailers(long movieId) {
         return mMovieRemoteDataSource.getTrailers(movieId);
+    }
+
+    @Override
+    public Observable<List<ReviewViewModel>> getReviews(long movieId) {
+        return mMovieRemoteDataSource.getReviews(movieId);
     }
 }

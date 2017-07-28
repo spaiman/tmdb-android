@@ -2,8 +2,10 @@ package com.setiawanpaiman.tmdb.android.http.api;
 
 import com.setiawanpaiman.tmdb.android.data.model.Movie;
 import com.setiawanpaiman.tmdb.android.data.model.PaginatedList;
+import com.setiawanpaiman.tmdb.android.data.model.Review;
 import com.setiawanpaiman.tmdb.android.data.model.Video;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 
 import io.reactivex.Observable;
@@ -24,4 +26,7 @@ public interface MovieApi {
 
     @GET("/3/movie/{movieId}/videos")
     Observable<PaginatedList<Video, VideoViewModel>> getTrailers(@Path("movieId") long movieId);
+
+    @GET("/3/movie/{movieId}/reviews")
+    Observable<PaginatedList<Review, ReviewViewModel>> getReviews(@Path("movieId") long movieId);
 }
