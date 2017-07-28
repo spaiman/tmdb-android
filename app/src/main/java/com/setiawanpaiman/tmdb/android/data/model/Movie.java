@@ -9,7 +9,7 @@ import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
  * Created by Setiawan Paiman on 24/6/17.
  */
 
-public class Movie {
+public class Movie implements IViewModel<MovieViewModel> {
 
     private static final String PHOTO_SMALL_SIZE = "w185";
 
@@ -21,6 +21,7 @@ public class Movie {
     private String release_date;
 
     @NonNull
+    @Override
     public MovieViewModel toViewModel() {
         return new MovieViewModel(id, title,
                 BuildConfig.BASE_URL_TMDB_IMAGE + PHOTO_SMALL_SIZE + poster_path,

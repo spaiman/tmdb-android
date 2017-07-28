@@ -1,5 +1,7 @@
 package com.setiawanpaiman.tmdb.android.moviedetail;
 
+import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -9,14 +11,21 @@ import dagger.Provides;
 @Module
 public class MovieDetailModule {
 
+    private final long mMovieId;
     private final MovieDetailContract.View mView;
 
-    public MovieDetailModule(MovieDetailContract.View view) {
+    public MovieDetailModule(MovieViewModel movieViewModel, MovieDetailContract.View view) {
+        this.mMovieId = movieViewModel.getId();
         this.mView = view;
     }
 
     @Provides
     MovieDetailContract.View providesView() {
         return mView;
+    }
+
+    @Provides
+    long providesMovieId() {
+        return mMovieId;
     }
 }

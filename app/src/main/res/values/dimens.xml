@@ -6,4 +6,7 @@
     <dimen name="poster_height">180dp</dimen>
     <dimen name="poster_detail_width">140dp</dimen>
     <dimen name="poster_detail_height">210dp</dimen>
+
+    <dimen name="trailer_thumbnail_width">192dp</dimen>
+    <dimen name="trailer_thumbnail_height">108dp</dimen>
 </resources>
