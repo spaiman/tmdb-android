@@ -16,11 +16,11 @@ import java.util.List;
  * Created by Setiawan Paiman on 28/7/17.
  */
 
-public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
+class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
     private final List<ReviewViewModel> mData;
 
-    public ReviewsAdapter() {
+    ReviewsAdapter() {
         mData = new ArrayList<>();
     }
 

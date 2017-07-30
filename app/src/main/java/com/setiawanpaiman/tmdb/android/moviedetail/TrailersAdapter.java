@@ -21,12 +21,12 @@ import java.util.List;
  * Created by Setiawan Paiman on 28/7/17.
  */
 
-public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHolder> {
+class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<VideoViewModel> mData;
 
-    public TrailersAdapter(Context mContext) {
+    TrailersAdapter(Context mContext) {
         this.mContext = mContext;
         this.mData = new ArrayList<>();
     }
