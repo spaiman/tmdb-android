@@ -65,6 +65,14 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mSortOrder == SortOrder.BY_FAVORITES) {
+            mPresenter.loadMovies(true, mSortOrder);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_movie_list, menu);
         return super.onCreateOptionsMenu(menu);
@@ -78,6 +86,9 @@ public class MovieListActivity extends AppCompatActivity
                 return true;
             case R.id.menu_item_top_rated:
                 changeSortOrder(mSortOrder, SortOrder.BY_TOP_RATED);
+                return true;
+            case R.id.menu_item_favorites:
+                changeSortOrder(mSortOrder, SortOrder.BY_FAVORITES);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

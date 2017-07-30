@@ -2,6 +2,7 @@ package com.setiawanpaiman.tmdb.android.moviedetail;
 
 import com.setiawanpaiman.tmdb.android.BasePresenter;
 import com.setiawanpaiman.tmdb.android.BaseView;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.ReviewViewModel;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.VideoViewModel;
 
@@ -23,5 +24,11 @@ public interface MovieDetailContract {
         void loadTrailers();
 
         void loadReviews();
+
+        boolean isFavoriteMovie(MovieViewModel movieViewModel);
+
+        boolean addFavoriteMovie(MovieViewModel movieViewModel);
+
+        boolean removeFavoriteMovie(MovieViewModel movieViewModel);
     }
 }

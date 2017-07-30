@@ -42,6 +42,11 @@ public class MovieRemoteDataSource implements MovieDataSource {
     }
 
     @Override
+    public Observable<List<MovieViewModel>> getFavoriteMovies() {
+        throw new UnsupportedOperationException("Get favorite movies to remote is not supported currently");
+    }
+
+    @Override
     public Observable<List<VideoViewModel>> getTrailers(long movieId) {
         return mMovieApi.getTrailers(movieId)
                 .map(PaginatedList::toListViewModel);
@@ -51,5 +56,20 @@ public class MovieRemoteDataSource implements MovieDataSource {
     public Observable<List<ReviewViewModel>> getReviews(long movieId) {
         return mMovieApi.getReviews(movieId)
                 .map(PaginatedList::toListViewModel);
+    }
+
+    @Override
+    public boolean isFavoriteMovie(MovieViewModel movieViewModel) {
+        throw new UnsupportedOperationException("Checking is favorite movie is not supported currently");
+    }
+
+    @Override
+    public boolean addFavoriteMovie(MovieViewModel movieViewModel) {
+        throw new UnsupportedOperationException("Add favorite to remote is not supported currently");
+    }
+
+    @Override
+    public boolean removeFavoriteMovie(MovieViewModel movieViewModel) {
+        throw new UnsupportedOperationException("Remove favorite from remote is not supported currently");
     }
 }

@@ -1,5 +1,8 @@
 package com.setiawanpaiman.tmdb.android.di.module;
 
+import android.content.ContentResolver;
+import android.content.Context;
+
 import com.setiawanpaiman.tmdb.android.BuildConfig;
 import com.setiawanpaiman.tmdb.android.http.api.ApiFactory;
 import com.setiawanpaiman.tmdb.android.http.api.MovieApi;
@@ -17,6 +20,12 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
+    private final Context mContext;
+
+    public ApplicationModule(Context context) {
+        mContext = context;
+    }
+
     @Provides
     @Singleton
     ApiFactory providesApiFactory() {
@@ -33,5 +42,11 @@ public class ApplicationModule {
     @Singleton
     BaseSchedulerProvider providesSchedulerProvider() {
         return SchedulerProvider.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    ContentResolver providesContentResolver() {
+        return mContext.getContentResolver();
     }
 }

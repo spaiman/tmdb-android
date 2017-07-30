@@ -24,7 +24,8 @@ public interface MovieListContract {
 
         enum SortOrder {
             BY_POPULARITY,
-            BY_TOP_RATED
+            BY_TOP_RATED,
+            BY_FAVORITES
         }
 
         void loadMovies(boolean refresh, SortOrder sortOrder);
