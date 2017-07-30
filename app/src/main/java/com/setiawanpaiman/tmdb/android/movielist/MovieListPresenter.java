@@ -48,15 +48,24 @@ class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void loadMovies(final boolean refresh, final SortOrder sortOrder) {
-        Observable<List<MovieViewModel>> observable = sortOrder == SortOrder.BY_POPULARITY ?
-                mMovieRepository.getPopularMovies() : mMovieRepository.getTopRatedMovies();
-
-        mComposite.add(observable
+        mComposite.add(getObservableBySortOrder(sortOrder)
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .subscribe(movieViewModels -> {
                     processMovieList(refresh, movieViewModels);
                 }, throwable -> mMovieListView.showError(), () -> {}));
+    }
+
+    private Observable<List<MovieViewModel>> getObservableBySortOrder(SortOrder sortOrder) {
+        switch (sortOrder) {
+            case BY_TOP_RATED:
+                return mMovieRepository.getTopRatedMovies();
+            case BY_FAVORITES:
+                return mMovieRepository.getFavoriteMovies();
+            case BY_POPULARITY:
+            default:
+                return mMovieRepository.getPopularMovies();
+        }
     }
 
     private void processMovieList(final boolean refresh,
