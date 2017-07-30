@@ -20,6 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".moviedetail.MovieDetailActivity" />
+        
+        <provider
+            android:authorities="com.setiawanpaiman.tmdb.android"
+            android:name=".content.MovieContentProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
