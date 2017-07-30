@@ -1,6 +1,7 @@
 package com.setiawanpaiman.tmdb.android.moviedetail;
 
 import com.setiawanpaiman.tmdb.android.data.source.MovieRepository;
+import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.util.scheduler.BaseSchedulerProvider;
 
 import javax.inject.Inject;
@@ -59,5 +60,20 @@ class MovieDetailPresenter implements MovieDetailContract.Presenter {
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .subscribe(mMovieDetailView::showReviews));
+    }
+
+    @Override
+    public boolean isFavoriteMovie(MovieViewModel movieViewModel) {
+        return mMovieRepository.isFavoriteMovie(movieViewModel);
+    }
+
+    @Override
+    public boolean addFavoriteMovie(MovieViewModel movieViewModel) {
+        return mMovieRepository.addFavoriteMovie(movieViewModel);
+    }
+
+    @Override
+    public boolean removeFavoriteMovie(MovieViewModel movieViewModel) {
+        return mMovieRepository.removeFavoriteMovie(movieViewModel);
     }
 }

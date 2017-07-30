@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Inject MovieDetailPresenter mPresenter;
 
+    private MovieViewModel mMovieViewModel;
     private TrailersAdapter mTrailersAdapter;
     private ReviewsAdapter mReviewsAdapter;
 
@@ -47,15 +49,15 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        MovieViewModel movieViewModel = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        mMovieViewModel = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
         DaggerMovieDetailComponent.builder()
                 .applicationComponent(((MovieApplication) getApplicationContext()).getApplicationComponent())
-                .movieDetailModule(new MovieDetailModule(movieViewModel, this))
+                .movieDetailModule(new MovieDetailModule(mMovieViewModel, this))
                 .build()
                 .inject(this);
 
-        bindViews(movieViewModel);
+        bindViews(mMovieViewModel);
         mPresenter.subscribe();
         if (savedInstanceState == null) {
             mPresenter.loadTrailers();
@@ -67,10 +69,27 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
+        boolean isFavorite = mPresenter.isFavoriteMovie(mMovieViewModel);
+        menu.findItem(R.id.button_favorite).setVisible(!isFavorite);
+        menu.findItem(R.id.button_unfavorite).setVisible(isFavorite);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.button_favorite:
+                mPresenter.addFavoriteMovie(mMovieViewModel);
+                supportInvalidateOptionsMenu();
+                return true;
+            case R.id.button_unfavorite:
+                mPresenter.removeFavoriteMovie(mMovieViewModel);
+                supportInvalidateOptionsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
