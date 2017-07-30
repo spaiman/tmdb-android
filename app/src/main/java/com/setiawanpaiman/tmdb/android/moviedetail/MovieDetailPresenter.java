@@ -4,6 +4,8 @@ import com.setiawanpaiman.tmdb.android.data.source.MovieRepository;
 import com.setiawanpaiman.tmdb.android.data.viewmodel.MovieViewModel;
 import com.setiawanpaiman.tmdb.android.util.scheduler.BaseSchedulerProvider;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import io.reactivex.annotations.NonNull;
@@ -51,7 +53,8 @@ class MovieDetailPresenter implements MovieDetailContract.Presenter {
         mComposite.add(mMovieRepository.getTrailers(mMovieId)
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .subscribe(mMovieDetailView::showTrailers));
+                .subscribe(mMovieDetailView::showTrailers,
+                        (t) -> mMovieDetailView.showTrailers(new ArrayList<>()), () -> {}));
     }
 
     @Override
@@ -59,7 +62,8 @@ class MovieDetailPresenter implements MovieDetailContract.Presenter {
         mComposite.add(mMovieRepository.getReviews(mMovieId)
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .subscribe(mMovieDetailView::showReviews));
+                .subscribe(mMovieDetailView::showReviews,
+                        (t) -> mMovieDetailView.showReviews(new ArrayList<>()), () -> {}));
     }
 
     @Override
